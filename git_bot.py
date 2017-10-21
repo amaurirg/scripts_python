@@ -10,7 +10,7 @@ github_password = config('password')
 github_api = Github(github_username, github_password).get_user()
 
 os.system('clear')
-print("Cria repositório no Github.\n")
+print("Esse script cria uma pasta e um repositório no Github.\n")
 
 while True:
     nome_repo = input("Nome do repositório e da pasta a serem criados: ")
@@ -28,7 +28,7 @@ while True:
 local = os.path.abspath(nome_repo)
 os.chdir(local)
 with open('.gitignore', 'w') as arquivo:
-    arquivo.write('.env\n.gitignore')
+    arquivo.write('.env\n.idea\ndb.sqlite3\n*pyc\n__pycache__\n')
 os.system('echo "# {}" >> README.md'.format(nome_repo))
 os.system('git init')
 os.system('git add .')
@@ -38,8 +38,6 @@ os.system('git push -u origin master')
 
 url_repo = github_api.get_repo(nome_repo).html_url
 print("\nURL do repositório:", url_repo)
-resposta = input("Deseja abrir o repositório no navegador (s|n)?")
 
-if resposta == 's':
-    b = webbrowser.get('google-chrome')
-    b.open(url_repo)
+b = webbrowser.get('google-chrome')
+b.open(url_repo)
