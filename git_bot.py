@@ -28,7 +28,7 @@ while True:
 local = os.path.abspath(nome_repo)
 os.chdir(local)
 with open('.gitignore', 'w') as arquivo:
-    arquivo.write('.env\n.idea\ndb.sqlite3\n*pyc\n__pycache__\n')
+    arquivo.write('.env\n.venv\n.gitignore\n.idea\ndb.sqlite3\n*pyc\n__pycache__\n')
 os.system('echo "# {}" >> README.md'.format(nome_repo))
 os.system('git init')
 os.system('git add .')
