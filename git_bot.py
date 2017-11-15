@@ -3,6 +3,7 @@ from github import Github
 import os
 import webbrowser
 import argparse
+import sys
 
 
 parser = argparse.ArgumentParser(description='Opções de repositórios no Github.')
@@ -20,22 +21,22 @@ os.system('clear')
 print("Esse script cria uma pasta(opcional) e um repositório no Github.\n")
 
 nome_repo = os.path.basename(os.getcwd())
-print(nome_repo)
-
 local = os.path.abspath(os.getcwd())
-print(local)
 
 if args.pasta:
-    descricao = input("Descrição do repositório no Github (opcional): ")
-    if nome_repo in [repo.name for repo in github_api.get_repos()]:
-        print("\nEsse repositório (e|ou) a pasta já existe(m). Escolha outro nome.\n")
-    else:
-        criando_repo = github_api.create_repo(nome_repo)
-        github_api.get_repo(nome_repo).edit(description=descricao)
+    while True:
+        descricao = input("Descrição do repositório no Github (opcional): ")
         if nome_repo in [repo.name for repo in github_api.get_repos()]:
-            print("\nRepositório criado com sucesso!\n")
+            print("\nEsse repositório (e|ou) a pasta já existe(m). O repositório não será criado.\n")
+            sys.exit()
         else:
-            print("\nO repositório não foi criado.")
+            criando_repo = github_api.create_repo(nome_repo)
+            github_api.get_repo(nome_repo).edit(description=descricao)
+            if nome_repo in [repo.name for repo in github_api.get_repos()]:
+                print("\nRepositório criado com sucesso!\n")
+            else:
+                print("\nO repositório não foi criado.")
+            break
 
 else:
     while True:
